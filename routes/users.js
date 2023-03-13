@@ -3,15 +3,15 @@ import { v4 as uuid } from 'uuid';
 
 const router = express.Router();
 
-const users = [
+let users = [
   {
-    id: uuid(),
+    id: 'd9838a50-64f2-4666-9619-5673d48e296e',
     firstName: 'John',
     lastName: 'Doe',
     age: 25,
   },
   {
-    id: uuid(),
+    id: '7eb7a167-9734-4651-9794-83c2b85164ed',
     firstName: 'Jane',
     lastName: 'Doe',
     age: 24,
@@ -43,6 +43,18 @@ router.post('/', (req, res) => {
   users.push(newUser);
 
   res.send(`User ${firstName} ${lastName} added successfully`);
+});
+
+router.delete('/:id', (req, res) => {
+  const { id } = req.params;
+
+  const foundUser = users.find((user) => user.id === id);
+
+  users = users.filter((user) => user.id !== id);
+
+  res.send(
+    `User ${foundUser?.firstName} ${foundUser?.lastName} deleted successfully`
+  );
 });
 
 export default router;
