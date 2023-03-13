@@ -1,5 +1,4 @@
 import express from 'express';
-// const express = require('express'); // equivalent to previous lin
 import bodyParser from 'body-parser';
 import usersRoutes from './routes/users.js';
 
