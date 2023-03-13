@@ -1,3 +1,4 @@
+import { StatusCodes } from 'http-status-codes';
 import { v4 as uuid } from 'uuid';
 
 let users = [
@@ -15,34 +16,38 @@ let users = [
   },
 ];
 
-export const getUsers = (req, res) => {
+export const getUsers = async (req, res) => {
   try {
-    if (users.length > 0) {
-      res.status(200).send(users);
+    if (Array.isArray(users) && users.length > 0) {
+      res.status(StatusCodes.OK).send(users);
     } else {
-      res.status(404).send({ message: 'Users not found!' });
+      res.status(StatusCodes.NOT_FOUND).send({ message: 'Users not found!' });
     }
   } catch (error) {
-    res.status(500).send(error);
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .send({ message: error.message });
   }
 };
 
-export const getUser = (req, res) => {
+export const getUser = async (req, res) => {
   try {
     const { id } = req.params;
     const foundUser = users.find((user) => user.id === id);
 
     if (foundUser) {
-      res.status(302).send(foundUser);
+      res.status(StatusCodes.OK).send(foundUser);
     } else {
-      res.status(404).send({ message: 'User not found!' });
+      res.status(StatusCodes.NOT_FOUND).send({ message: 'User not found!' });
     }
   } catch (error) {
-    res.status(500).send(error);
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .send({ message: error.message });
   }
 };
 
-export const createUser = (req, res) => {
+export const createUser = async (req, res) => {
   try {
     const { firstName, lastName, age } = req.body;
 
@@ -56,16 +61,20 @@ export const createUser = (req, res) => {
 
       users.push(newUser);
 
-      res.status(201).send(`User ${firstName} ${lastName} added successfully`);
+      res
+        .status(StatusCodes.CREATED)
+        .send(`User ${firstName} ${lastName} added successfully`);
     } else {
-      res.status(400).send('Invalid data');
+      res.status(StatusCodes.BAD_REQUEST).send({ message: 'Invalid data' });
     }
-  } catch {
-    res.status(500).send(error);
+  } catch (error) {
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .send({ message: error.message });
   }
 };
 
-export const deleteUser = (req, res) => {
+export const deleteUser = async (req, res) => {
   try {
     const { id } = req.params;
     const foundUser = users.find((user) => user.id === id);
@@ -74,19 +83,21 @@ export const deleteUser = (req, res) => {
       users = users.filter((user) => user.id !== id);
 
       res
-        .status(200)
+        .status(StatusCodes.OK)
         .send(
           `User ${foundUser?.firstName} ${foundUser?.lastName} deleted successfully`
         );
     } else {
-      res.status(404).send({ message: 'User not found!' });
+      res.status(StatusCodes.NOT_FOUND).send({ message: 'User not found!' });
     }
-  } catch {
-    res.status(500).send(error);
+  } catch (error) {
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .send({ message: error.message });
   }
 };
 
-export const updateProvidedUserData = (req, res) => {
+export const updateProvidedUserData = async (req, res) => {
   try {
     const { id } = req.params;
     const foundUser = users.find((user) => user.id === id);
@@ -100,22 +111,22 @@ export const updateProvidedUserData = (req, res) => {
         age && (foundUser.age = age);
 
         res
-          .status(200)
+          .status(StatusCodes.OK)
           .send(
             `User ${foundUser?.firstName} ${foundUser?.lastName} updated successfully`
           );
       } else {
-        res.status(400).send('Invalid data');
+        res.status(StatusCodes.BAD_REQUEST).send('Invalid data');
       }
     } else {
-      res.status(404).send({ message: 'User not found!' });
+      res.status(StatusCodes.NOT_FOUND).send({ message: 'User not found!' });
     }
-  } catch {
-    res.status(500).send(error);
+  } catch (error) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error);
   }
 };
 
-export const updateOverallUserData = (req, res) => {
+export const updateOverallUserData = async (req, res) => {
   try {
     const { id } = req.params;
     const foundUser = users.find((user) => user.id === id);
@@ -129,17 +140,17 @@ export const updateOverallUserData = (req, res) => {
         foundUser.age = age;
 
         res
-          .status(200)
+          .status(StatusCodes.OK)
           .send(
-            `User ${foundUser?.firstName} ${foundUser?.lastName} updated successfully`
+            `User ${foundUser.firstName} ${foundUser.lastName} updated successfully`
           );
       } else {
-        res.status(400).send('Invalid data');
+        res.status(StatusCodes.BAD_REQUEST).send('Invalid data');
       }
     } else {
-      res.status(404).send({ message: 'User not found!' });
+      res.status(StatusCodes.NOT_FOUND).send({ message: 'User not found!' });
     }
-  } catch {
-    res.status(500).send(error);
+  } catch (error) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(error);
   }
 };
