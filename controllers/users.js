@@ -18,11 +18,7 @@ let users = [
 
 export const getUsers = async (req, res) => {
   try {
-    if (Array.isArray(users) && users.length > 0) {
-      res.status(StatusCodes.OK).send(users);
-    } else {
-      res.status(StatusCodes.NOT_FOUND).send({ message: 'Users not found!' });
-    }
+    res.status(StatusCodes.OK).send(res.paginatedResults);
   } catch (error) {
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)

@@ -7,11 +7,12 @@ import {
   updateProvidedUserData,
   updateOverallUserData,
 } from '../controllers/users.js';
+import pagination from '../middleware/pagination.js';
 
 const router = express.Router();
 
 // all routes in here are starting with /users
-router.get('/', getUsers);
+router.get('/', pagination, getUsers);
 router.get('/:id', getUser);
 router.post('/', createUser);
 router.delete('/:id', deleteUser);
