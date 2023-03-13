@@ -59,14 +59,26 @@ router.delete('/:id', (req, res) => {
 
 router.patch('/:id', (req, res) => {
   const { id } = req.params;
-
   const foundUser = users.find((user) => user.id === id);
-
   const { firstName, lastName, age } = req.body;
 
   firstName && (foundUser.firstName = firstName);
   lastName && (foundUser.lastName = lastName);
   age && (foundUser.age = age);
+
+  res.send(
+    `User ${foundUser?.firstName} ${foundUser?.lastName} updated successfully`
+  );
+});
+
+router.put('/:id', (req, res) => {
+  const { id } = req.params;
+  const foundUser = users.find((user) => user.id === id);
+  const { firstName, lastName, age } = req.body;
+
+  foundUser.firstName = firstName;
+  foundUser.lastName = lastName;
+  foundUser.age = age;
 
   res.send(
     `User ${foundUser?.firstName} ${foundUser?.lastName} updated successfully`
