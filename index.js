@@ -15,8 +15,6 @@ app.use(logger);
 // users routes
 app.use('/users', usersRoutes);
 
-app.get('/', (req, res) => res.send(`Hello from Homepage.`));
-
 // undefined routes
 app.use(undefinedRoutes);
 

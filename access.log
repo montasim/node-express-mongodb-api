@@ -1,1 +1,6 @@
 {"timestamp":"2023-03-13T21:06:40.572Z","ip":"::1","location":"Unknown","browser":"Chrome 110.0.0 / Windows 10.0.0","method":"GET","url":"/users","status":200,"data":""}
+{"timestamp":"2023-03-13T21:07:24.928Z","ip":"::1","location":"Unknown","browser":"Chrome 110.0.0 / Windows 10.0.0","method":"GET","url":"/","status":200,"data":""}
+{"timestamp":"2023-03-13T21:07:30.134Z","ip":"::1","location":"Unknown","browser":"Chrome 110.0.0 / Windows 10.0.0","method":"GET","url":"/users","status":200,"data":""}
+{"timestamp":"2023-03-13T21:07:31.498Z","ip":"::1","location":"Unknown","browser":"Chrome 110.0.0 / Windows 10.0.0","method":"GET","url":"/users","status":200,"data":""}
+{"timestamp":"2023-03-13T21:07:41.030Z","ip":"::1","location":"Unknown","browser":"Chrome 110.0.0 / Windows 10.0.0","method":"GET","url":"/users/import%20logger%20from%20'./middleware/logger.js';","status":200,"data":""}
+{"timestamp":"2023-03-13T21:07:54.096Z","ip":"::1","location":"Unknown","browser":"Chrome 110.0.0 / Windows 10.0.0","method":"GET","url":"/users/d9838a50-64f2-4666-9619-5673d48e296e","status":200,"data":""}
