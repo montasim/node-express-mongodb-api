@@ -1,29 +1,48 @@
 import express from 'express';
-import fs from 'fs';
-import usersData from '../user.json' assert { type: 'json' };
+import { v4 as uuid } from 'uuid';
 
 const router = express.Router();
 
+const users = [
+  {
+    id: uuid(),
+    firstName: 'John',
+    lastName: 'Doe',
+    age: 25,
+  },
+  {
+    id: uuid(),
+    firstName: 'Jane',
+    lastName: 'Doe',
+    age: 24,
+  },
+];
+
 // all routes in here are starting with /users
 router.get('/', (req, res) => {
-  res.send(usersData);
+  res.send(users);
+});
+
+router.get('/:id', (req, res) => {
+  const { id } = req.params;
+
+  const user = users.find((user) => user.id === id);
+
+  res.send(user);
 });
 
 router.post('/', (req, res) => {
   const { firstName, lastName, age } = req.body;
-  const newUser = { firstName, lastName, age };
+  const newUser = {
+    id: uuid(),
+    firstName,
+    lastName,
+    age,
+  };
 
-  usersData.push(newUser); // add the new user to the existing array
+  users.push(newUser);
 
-  // write the updated data to the JSON file
-  fs.writeFile('../user.json', JSON.stringify(usersData), (err) => {
-    if (err) {
-      console.error(err);
-      res.status(500).send('Error writing to file');
-    } else {
-      res.status(200).send('User added successfully');
-    }
-  });
+  res.send(`User ${firstName} ${lastName} added successfully`);
 });
 
 export default router;
