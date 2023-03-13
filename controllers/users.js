@@ -16,65 +16,130 @@ let users = [
 ];
 
 export const getUsers = (req, res) => {
-  res.send(users);
+  try {
+    if (users.length > 0) {
+      res.status(200).send(users);
+    } else {
+      res.status(404).send({ message: 'Users not found!' });
+    }
+  } catch (error) {
+    res.status(500).send(error);
+  }
 };
 
 export const getUser = (req, res) => {
-  const { id } = req.params;
-  const foundUser = users.find((user) => user.id === id);
+  try {
+    const { id } = req.params;
+    const foundUser = users.find((user) => user.id === id);
 
-  res.send(foundUser);
+    if (foundUser) {
+      res.status(302).send(foundUser);
+    } else {
+      res.status(404).send({ message: 'User not found!' });
+    }
+  } catch (error) {
+    res.status(500).send(error);
+  }
 };
 
 export const createUser = (req, res) => {
-  const { firstName, lastName, age } = req.body;
-  const newUser = {
-    id: uuid(),
-    firstName,
-    lastName,
-    age,
-  };
+  try {
+    const { firstName, lastName, age } = req.body;
 
-  users.push(newUser);
+    if (firstName && lastName && age) {
+      const newUser = {
+        id: uuid(),
+        firstName,
+        lastName,
+        age,
+      };
 
-  res.send(`User ${firstName} ${lastName} added successfully`);
+      users.push(newUser);
+
+      res.status(201).send(`User ${firstName} ${lastName} added successfully`);
+    } else {
+      res.status(400).send('Invalid data');
+    }
+  } catch {
+    res.status(500).send(error);
+  }
 };
 
 export const deleteUser = (req, res) => {
-  const { id } = req.params;
-  const foundUser = users.find((user) => user.id === id);
+  try {
+    const { id } = req.params;
+    const foundUser = users.find((user) => user.id === id);
 
-  users = users.filter((user) => user.id !== id);
+    if (foundUser) {
+      users = users.filter((user) => user.id !== id);
 
-  res.send(
-    `User ${foundUser?.firstName} ${foundUser?.lastName} deleted successfully`
-  );
+      res
+        .status(200)
+        .send(
+          `User ${foundUser?.firstName} ${foundUser?.lastName} deleted successfully`
+        );
+    } else {
+      res.status(404).send({ message: 'User not found!' });
+    }
+  } catch {
+    res.status(500).send(error);
+  }
 };
 
 export const updateProvidedUserData = (req, res) => {
-  const { id } = req.params;
-  const foundUser = users.find((user) => user.id === id);
-  const { firstName, lastName, age } = req.body;
+  try {
+    const { id } = req.params;
+    const foundUser = users.find((user) => user.id === id);
 
-  firstName && (foundUser.firstName = firstName);
-  lastName && (foundUser.lastName = lastName);
-  age && (foundUser.age = age);
+    if (foundUser) {
+      const { firstName, lastName, age } = req.body;
 
-  res.send(
-    `User ${foundUser?.firstName} ${foundUser?.lastName} updated successfully`
-  );
+      if (firstName || lastName || age) {
+        firstName && (foundUser.firstName = firstName);
+        lastName && (foundUser.lastName = lastName);
+        age && (foundUser.age = age);
+
+        res
+          .status(200)
+          .send(
+            `User ${foundUser?.firstName} ${foundUser?.lastName} updated successfully`
+          );
+      } else {
+        res.status(400).send('Invalid data');
+      }
+    } else {
+      res.status(404).send({ message: 'User not found!' });
+    }
+  } catch {
+    res.status(500).send(error);
+  }
 };
 
 export const updateOverallUserData = (req, res) => {
-  const { id } = req.params;
-  const foundUser = users.find((user) => user.id === id);
-  const { firstName, lastName, age } = req.body;
+  try {
+    const { id } = req.params;
+    const foundUser = users.find((user) => user.id === id);
 
-  foundUser.firstName = firstName;
-  foundUser.lastName = lastName;
-  foundUser.age = age;
+    if (foundUser) {
+      const { firstName, lastName, age } = req.body;
 
-  res.send(
-    `User ${foundUser?.firstName} ${foundUser?.lastName} updated successfully`
-  );
+      if (firstName && lastName && age) {
+        foundUser.firstName = firstName;
+        foundUser.lastName = lastName;
+        foundUser.age = age;
+
+        res
+          .status(200)
+          .send(
+            `User ${foundUser?.firstName} ${foundUser?.lastName} updated successfully`
+          );
+      } else {
+        res.status(400).send('Invalid data');
+      }
+    } else {
+      res.status(404).send({ message: 'User not found!' });
+    }
+  } catch {
+    res.status(500).send(error);
+  }
 };

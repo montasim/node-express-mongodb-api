@@ -1,14 +1,14 @@
 [
-    {
-      "id": "d9838a50-64f2-4666-9619-5673d48e296e",
-      "firstName": "John",
-      "lastName": "Doe",
-      "age": 25
-    },
-    {
-      "id": "7eb7a167-9734-4651-9794-83c2b85164ed",
-      "firstName": "Jane",
-      "lastName": "Doe",
-      "age": 24
-    }
-  ]
+  {
+    "id": "d9838a50-64f2-4666-9619-5673d48e296e",
+    "firstName": "John",
+    "lastName": "Doe",
+    "age": 25
+  },
+  {
+    "id": "7eb7a167-9734-4651-9794-83c2b85164ed",
+    "firstName": "Jane",
+    "lastName": "Doe",
+    "age": 24
+  }
+]
