@@ -7,6 +7,7 @@ import {
   updateProvidedUserData,
   updateOverallUserData,
 } from '../controllers/users.js';
+import { validateCreateUser, validateUpdateUser } from '../validators/users.js';
 import pagination from '../middleware/pagination.js';
 
 const router = express.Router();
@@ -14,9 +15,9 @@ const router = express.Router();
 // all routes in here are starting with /users
 router.get('/', pagination, getUsers);
 router.get('/:id', getUser);
-router.post('/', createUser);
+router.post('/', validateCreateUser, createUser);
 router.delete('/:id', deleteUser);
 router.patch('/:id', updateProvidedUserData);
-router.put('/:id', updateOverallUserData);
+router.put('/:id', validateUpdateUser, updateOverallUserData);
 
 export default router;

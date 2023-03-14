@@ -1,21 +1,6 @@
 import { StatusCodes } from 'http-status-codes';
 import { v4 as uuid } from 'uuid';
 
-let users = [
-  {
-    id: 'd9838a50-64f2-4666-9619-5673d48e296e',
-    firstName: 'John',
-    lastName: 'Doe',
-    age: 25,
-  },
-  {
-    id: '7eb7a167-9734-4651-9794-83c2b85164ed',
-    firstName: 'Jane',
-    lastName: 'Doe',
-    age: 24,
-  },
-];
-
 export const getUsers = async (req, res) => {
   try {
     res.status(StatusCodes.OK).send(res.paginatedResults);
@@ -55,7 +40,7 @@ export const createUser = async (req, res) => {
         age,
       };
 
-      users.push(newUser);
+      await req.db.collection('users').insertOne(newUser);
 
       res
         .status(StatusCodes.CREATED)
@@ -76,7 +61,7 @@ export const deleteUser = async (req, res) => {
     const foundUser = users.find((user) => user.id === id);
 
     if (foundUser) {
-      users = users.filter((user) => user.id !== id);
+      await req.db.collection('users').deleteOne({ _id: userId });
 
       res
         .status(StatusCodes.OK)
